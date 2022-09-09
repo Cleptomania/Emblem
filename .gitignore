@@ -1,0 +1,5 @@
+_skbuild
+.venv
+venv
+build
+*.egg-info
