@@ -1,10 +1,13 @@
 #include "Application.h"
 
+#include "Log.h"
+
 namespace Emblem
 {
 
     Application::Application()
     {
+        Emblem::Log::Init();
     }
 
     Application::~Application()
