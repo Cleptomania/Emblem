@@ -5,7 +5,6 @@ project(emblem VERSION "1.0.0" LANGUAGES CXX)
 # --------------
 # ---- GLFW ----
 # --------------
-
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
@@ -20,6 +19,11 @@ add_subdirectory(lib/glm)
 # ---- Vulkan ----
 # ----------------
 find_package(Vulkan REQUIRED)
+
+# ----------------
+# ---- spdlog ----
+# ----------------
+add_subdirectory(lib/spdlog)
 
 # ----------------------
 # ---- scikit-build ----
@@ -40,11 +44,15 @@ endif()
 # Now we can find pybind11
 find_package(pybind11 CONFIG REQUIRED)
 
-pybind11_add_module(_core MODULE src/main.cpp)
+file(GLOB emblem_SRC
+  "src/*.cpp"
+)
 
-target_compile_features(_core PRIVATE cxx_std_17)
-target_compile_definitions(_core PRIVATE VERSION_INFO=${PROJECT_VERSION})
-target_link_libraries(_core PRIVATE glfw glm ${Vulkan_LIBRARIES})
-target_include_directories(_core PUBLIC ${Vulkan_INCLUDE_DIR})
+pybind11_add_module(_emblem MODULE ${emblem_SRC})
 
-install(TARGETS _core DESTINATION .)
+target_compile_features(_emblem PRIVATE cxx_std_17)
+target_compile_definitions(_emblem PRIVATE VERSION_INFO=${PROJECT_VERSION})
+target_link_libraries(_emblem PRIVATE glfw glm spdlog::spdlog ${Vulkan_LIBRARIES})
+target_include_directories(_emblem PUBLIC ${Vulkan_INCLUDE_DIR})
+
+install(TARGETS _emblem DESTINATION .)

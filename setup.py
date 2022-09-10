@@ -7,9 +7,9 @@ setup(
     description="A Game Engine",
     author="Darren Eberly",
     license="MIT",
+    include_package_data=True,
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     cmake_install_dir="src/emblem",
-    include_package_data=True,
     python_requires=">=3.9",
 )

@@ -1,1 +1,1 @@
-from ._core import __doc__, __version__, Application
+from ._emblem import __version__, Application
